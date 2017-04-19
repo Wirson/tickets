@@ -1,0 +1,5 @@
+{
+    "require": {
+        "mlebkowski/pesel": "^1.0"
+    }
+}
