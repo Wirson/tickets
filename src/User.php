@@ -121,6 +121,24 @@ class User
         }
     }
 
+    public static function removeFromDB(PDO $conn, $id)
+    {
+        if ($id != self::NON_EXISTING_ID) {
+            $stmt = $conn->prepare('DELETE FROM users WHERE id=:id');
+            $result = $stmt->execute(['id' => $id]);
+            if ($result === true) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param PDO $conn
+     * @return bool
+     * if <10 tickets sold returns true
+     */
     public static function checkTicketsCount(PDO $conn)
     {
         $count = '';
@@ -140,6 +158,7 @@ class User
         if ($result !== false && $result->rowCount() != 0) {
             foreach ($result as $row) {
                 $loadedUser = new User();
+                $loadedUser->id = $row['id'];
                 $loadedUser->email = $row['email'];
                 $loadedUser->name = $row['name'];
                 $loadedUser->pesel = $row['pesel'];

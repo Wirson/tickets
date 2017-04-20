@@ -9,8 +9,14 @@ function drawTable($conn)
         echo '<tr><td>' . $user->getName() . '</td>
                 <td>' . $user->getEmail() . '</td>
                 <td>' . $user->getPesel() . '</td>
-                <td>' . $user->getTickets() . '</td></tr>';
+                <td>' . $user->getTickets() . '</td>
+                <td><form action="" method="post"><input type="submit" name="id" value=' . $user->getId() . '>Usun</form></td></tr>';
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    User::removeFromDB($conn, $id);
 }
 
 ?>
@@ -33,6 +39,7 @@ function drawTable($conn)
             <th>E-mail</th>
             <th>PESEL</th>
             <th>Bilety</th>
+            <th> </th>
         </tr>
         </thead>
         <tbody>
